@@ -10,7 +10,7 @@ const Card = (props) => {
   };
   const picture = {
     user:{
-      picture: "http://logok.org/wp-content/uploads/2015/02/NASA-logo-880x660.png",
+      picture: "https://m.media-amazon.com/images/I/61BITGhLxNL._AC_UX466_.jpg",
       username: 'nasa'
     }
   }
@@ -22,12 +22,12 @@ const Card = (props) => {
         handleMoreOptionsClick={handleMoreOptionsClick}
         picture={picture}
       />
-      <figure>
+      <div className="figure">
         <img src={image.url} alt={image.title} />
-        <figcaption>{image.title}</figcaption>
+        <div className="figcaption">{image.title}</div>
         <div className="date">Published on {image.date}</div>
         <p className="desc">{image.explanation} </p>
-      </figure>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import MoreOptionsIcon from './MoreOptionsIcon';
 
 function CardHeader({handleMoreOptionsClick, picture}) {
   return (
@@ -10,6 +11,9 @@ function CardHeader({handleMoreOptionsClick, picture}) {
         />
         <span>{picture.user.username}</span>
       </div>
+      <button type="button" onClick={handleMoreOptionsClick}>
+        <MoreOptionsIcon />
+      </button>
     </div>
   );
 }

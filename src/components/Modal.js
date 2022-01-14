@@ -14,12 +14,12 @@ const Modal = ({handleClick}) => {
 
   return (
     <div className="modal" onClick={handleClick}>
-      <div className="modal-sec">
+      <div className="modal-container">
         {buttons.map((button) => (
-          <div className="button" key={button.id} 
+          <button type="button" className="btn" key={button.id} 
             onClick={handleClick}>
             {button.label}
-          </div>
+          </button>
         ))}
       </div>
     </div>
