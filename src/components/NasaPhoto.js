@@ -8,9 +8,15 @@ export default function NasaPhoto() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoData, setPhotoData] = useState("");
-  const today = new Date();
+  
+  let date = new Date();
+  let today = date.toISOString().slice(0, 10);
+  let pastDate = new Date(date);
+  pastDate.setDate(pastDate.getDate() - 35);
+  let finalDate = pastDate.toISOString().slice(0, 10);
+
   const [dates, setDates] = useState({
-    start: substractTenDays(today),
+    start: finalDate,
     end: today,
   });
 
