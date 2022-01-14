@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
+import Card from './Card';
 
 const API_KEY = process.env.REACT_APP_NASA_KEY;
 const APOD_URL = "https://api.nasa.gov/planetary/apod";
@@ -8,7 +9,7 @@ export default function NasaPhoto() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoData, setPhotoData] = useState("");
-  
+
   let date = new Date();
   let today = date.toISOString().slice(0, 10);
   let pastDate = new Date(date);
@@ -47,29 +48,13 @@ export default function NasaPhoto() {
   return (
     <>
     <NavBar />
-    <div className="nasa-photo">
-      {photoData.media_type === "image" ? (
-        <img
-          src={photoData.url}
-          alt={photoData.title}
-          className="photo"
-        />
-      ) : (
-        <iframe
-          title="space-video"
-          src={photoData.url}
-          frameBorder="0"
-          gesture="media"
-          allow="encrypted-media"
-          allowFullScreen
-          className="photo"
-        />
-      )}
-      <div>
-        <h1>{photoData.title}</h1>
-        <p className="date">{photoData.date}</p>
-        <p className="explanation">{photoData.explanation}</p>
-      </div>
+    <div className='feed-container'>
+      {photoData.map((image) => (
+        <Card 
+          key={image.id} 
+          picture={image}
+         />
+      ))}
     </div>
     </>
   );
