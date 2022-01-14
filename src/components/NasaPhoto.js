@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 
-const apiKey = process.env.REACT_APP_NASA_KEY;
+const API_KEY = process.env.REACT_APP_NASA_KEY;
+const APOD_URL = "https://api.nasa.gov/planetary/apod";
 
 export default function NasaPhoto() {
-  const [photoData, setPhotoData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [photoData, setPhotoData] = useState("");
+  const today = new Date();
+  const [dates, setDates] = useState({
+    start: substractTenDays(today),
+    end: today,
+  });
+
+  const baseUrl = `${APOD_URL}?api_key=${API_KEY}`;
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${baseUrl}&start_date=${dates.start}&end_date=${dates.end}`);
+      const data = await response.json()
+      console.log('NASA APOD data', data)
+      setPhotoData(data);
+    } catch (error) {
+      setErrorMessage(error.message);
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 10000);
+      console.log(error)
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
-    fetchPhoto();
-
-    async function fetchPhoto() {
-      const res = await fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
-      );
-      const data = await res.json();
-      setPhotoData(data);
-      console.log(data);
-    }
+    fetchData();
   }, []);
-
-  if (!photoData) return <div />;
 
   return (
     <>

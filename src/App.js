@@ -6,13 +6,11 @@ import "./App.css";
 
 export default function App() {
   return (
-
       <div className="app">
         <Routes>
           <Route path="/" element={<Home/>}  exact />
           <Route path="/nasaphoto" element={<NasaPhoto/>}  />
         </Routes>
       </div>
- 
   );
 }
