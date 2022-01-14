@@ -1,12 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Righteous&display=swap');
 
 body {
-  font-family: 'Righteous', cursive;
-  color: #d14f4f;
-  line-height: 1.7;
-  font-size: 19px;
-  background-color: #222222;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23424242' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  font-family: "Nimbus Sans", sans-serif;
+    color: var(--dark-grey);
+    background-color: var(--bg-off-white);
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+}
+
+ul {
+  list-style: none;
+}
+a {
+  font-family: "Nimbus Sans Bold";
+  text-decoration: none;
+  color: inherit;
+}
+h1 > a {
+  font-family: "Blue Vinyl";
 }
 
 /* navbar ---------- */
@@ -42,17 +53,44 @@ body {
   margin: 1rem 0 3rem 0;
 }
 
-@media (max-width: 1280px) {
-  .nasa-photo {
-    display: block;
-  }
-
-  .nasa-photo img {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 30px;
-  }
+.card-container{
+  max-width: 614px;
+  margin: 0 auto 1.5rem;
+  border: 1px solid var(--light-grey);
+  background-color: var(--bg-white);
 }
+
+.date{
+  font-size: 0.6rem;
+  color: var(--md-grey);
+  text-transform: uppercase;
+}
+
+figure img {
+  width: 100%;
+  display: block;
+}
+figcaption {
+  font-size: 1.2rem;
+}
+
+/* @media (max-width: 1280px) {
+  .feed-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    margin: 1rem 0 3rem 0;
+  }
+  
+  .card-container{
+    max-width: 614px;
+    margin: 0 auto 1.5rem;
+    border: 1px solid var(--light-grey);
+    background-color: var(--bg-white);
+  }
+} */
 
 .home {
   display: flex;
