@@ -9,6 +9,7 @@ export default function NasaPhoto() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoData, setPhotoData] = useState("");
+  console.log(photoData)
 
   let date = new Date();
   let today = date.toISOString().slice(0, 10);
@@ -23,27 +24,25 @@ export default function NasaPhoto() {
 
   const baseUrl = `${APOD_URL}?api_key=${API_KEY}`;
 
-  const fetchData = async () => {
+  useEffect(() => {
+    fetchData();
+    async function fetchData() { 
     setIsLoading(true);
     try {
       const response = await fetch(`${baseUrl}&start_date=${dates.start}&end_date=${dates.end}`);
       const data = await response.json()
-      console.log('NASA APOD data', data)
       setPhotoData(data);
     } catch (error) {
-      setErrorMessage(error.message);
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 10000);
-      console.log(error)
-    } finally {
-      setIsLoading(false);
+        setErrorMessage(error.message);
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 10000);
+        console.log(error)
+      }
     }
-  }
-
-  useEffect(() => {
-    fetchData();
   }, []);
+
+  if (!photoData) return <div />;
 
   return (
     <>
