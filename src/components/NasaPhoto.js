@@ -9,7 +9,6 @@ export default function NasaPhoto() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoData, setPhotoData] = useState("");
-  console.log(photoData)
 
   let date = new Date();
   let today = date.toISOString().slice(0, 10);

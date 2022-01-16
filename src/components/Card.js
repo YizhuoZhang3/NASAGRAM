@@ -12,7 +12,7 @@ const Card = (props) => {
 
   const [isLiked, setIsLiked] = useState(false);
   // const [isHeartClicked, setIsHeartClicked] = useState(false);
-  // const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   // const [comments, setComments] = useState([]);
 
   const picture = {
@@ -31,10 +31,12 @@ const Card = (props) => {
       />
       <div className="figure">
         <img src={image.url} alt={image.title} />
-        <ImageFooter isLiked={isLiked}/>
-        <div className="figcaption">{image.title}</div>
-        <div className="date">Published on {image.date}</div>
-        <p className="desc">{image.explanation} </p>
+        <ImageFooter isLiked={isLiked} isSaved={isSaved}/>
+        <div className="fig-container">
+          <div className="figcaption">{image.title}</div>
+          <div className="date">Published on {image.date}</div>
+          <p className="desc">{image.explanation} </p>
+        </div>
       </div>
     </div>
   )
