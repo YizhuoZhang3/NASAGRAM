@@ -1,58 +1,68 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import NavBar from "./NavBar";
 import Card from './Card';
+import {v4 as uuid} from "uuid";
 
 const API_KEY = process.env.REACT_APP_NASA_KEY;
 const APOD_URL = "https://api.nasa.gov/planetary/apod";
 const baseUrl = `${APOD_URL}?api_key=${API_KEY}`;
 
-const substractTenDays = (date) =>
-  new Date(Date.parse(date) - 864000000).toLocaleDateString("en-CA", {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  });
-
-const today = new Date().toLocaleDateString("en-CA", {
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-})
-
-const useEvent = (event, callback) => {
-  useEffect(() => {
-    window.addEventListener(event, callback);
-    return () => window.removeEventListener(event, callback);
-  });
-};
-
 export default function NasaPhoto() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [photoData, setPhotoData] = useState("");
+  const [photoData, setPhotoData] = useState([]);
+  //console.log(photoData);
+
+  const substractTenDays = (date) =>
+    new Date(Date.parse(date) - 864000000).toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+  });
+
+  const today = new Date().toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  })
+
   const [dates, setDates] = useState({
     start: substractTenDays(today),
     end: today,
   });
 
-  useEffect(() => {
-    fetchData();
-    async function fetchData() { 
-    setIsLoading(true);
-    try {
-      const response = await fetch(`${baseUrl}&start_date=${dates.start}&end_date=${dates.end}`);
-      const data = await response.json()
-      setPhotoData(data);
-    } catch (error) {
-        setErrorMessage(error.message);
-        setTimeout(() => {
-          setErrorMessage("");
-        }, 10000);
-        console.log(error)
+  const Url = `${baseUrl}&start_date=${dates.start}&end_date=${dates.end}`;
+
+  const randomLikes = () => Math.floor(Math.random() * 150);
+
+  const processData = (data) => 
+    data
+      .filter((obj) => obj.media_type === "image")
+      .reverse()
+      .map((image) => ({
+        ...image,
+        likes: randomLikes(),
+        id: uuid(),
+        isSaved: false,
+      }));
+
+  const fetchData = useCallback(
+    async(url, setState) => {
+      setIsLoading(true);
+      try{
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        const processedData = processData(data);
+        console.log("this is processed data", processedData);
+        setPhotoData((prev) => prev.concat(processedData));
+      } catch (err){
+        setErrorMessage(err.message);
+      } finally {
+        setIsLoading(false);
       }
-    }
-  }, []);
+    }, [])
 
   const handleScroll = () => {
     if (isLoading) {
@@ -67,9 +77,20 @@ export default function NasaPhoto() {
     }
   };
 
+  const useEvent = (event, callback) => {
+    useEffect(() => {
+      window.addEventListener(event, callback);
+      return () => window.removeEventListener(event, callback);
+    });
+  };
+
   useEvent("scroll", handleScroll);
 
-  if (!photoData) return <div />;
+  useEffect(() => {
+    fetchData(Url, setPhotoData);
+  }, [Url, setPhotoData]);
+
+  // if (!photoData) return <div />;
 
   return (
     <>
