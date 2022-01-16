@@ -4,24 +4,37 @@ import Card from './Card';
 
 const API_KEY = process.env.REACT_APP_NASA_KEY;
 const APOD_URL = "https://api.nasa.gov/planetary/apod";
+const baseUrl = `${APOD_URL}?api_key=${API_KEY}`;
+
+const substractTenDays = (date) =>
+  new Date(Date.parse(date) - 864000000).toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+
+const today = new Date().toLocaleDateString("en-CA", {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+})
+
+const useEvent = (event, callback) => {
+  useEffect(() => {
+    window.addEventListener(event, callback);
+    return () => window.removeEventListener(event, callback);
+  });
+};
 
 export default function NasaPhoto() {
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [photoData, setPhotoData] = useState("");
-
-  let date = new Date();
-  let today = date.toISOString().slice(0, 10);
-  let pastDate = new Date(date);
-  pastDate.setDate(pastDate.getDate() - 35);
-  let finalDate = pastDate.toISOString().slice(0, 10);
-
   const [dates, setDates] = useState({
-    start: finalDate,
+    start: substractTenDays(today),
     end: today,
   });
-
-  const baseUrl = `${APOD_URL}?api_key=${API_KEY}`;
 
   useEffect(() => {
     fetchData();
@@ -40,6 +53,21 @@ export default function NasaPhoto() {
       }
     }
   }, []);
+
+  const handleScroll = () => {
+    if (isLoading) {
+      return;
+    }
+    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+      setDates((prev) => ({
+        ...prev,
+        start: substractTenDays(prev.start),
+        end: substractTenDays(prev.end),
+      }));
+    }
+  };
+
+  useEvent("scroll", handleScroll);
 
   if (!photoData) return <div />;
 
