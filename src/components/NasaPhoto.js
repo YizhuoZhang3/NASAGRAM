@@ -90,8 +90,6 @@ export default function NasaPhoto() {
     fetchData(Url, setPhotoData);
   }, [Url, setPhotoData]);
 
-  // if (!photoData) return <div />;
-
   return (
     <>
     <NavBar />
