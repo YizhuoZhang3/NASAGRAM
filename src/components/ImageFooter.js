@@ -12,7 +12,7 @@ function ImageFooter({picture, isLiked, isSaved, isHeartClicked, handleLikeClick
         isClicked={isHeartClicked}
         isLiked={isLiked}
         onClick={() => handleLikeClick(picture.id)}
-        onClick={() => handleSaveClick(picture.id)}>
+        >
         <HeartIcon isLiked={isLiked}/>
       </button>
       <button className='comment-btn'>
@@ -21,7 +21,9 @@ function ImageFooter({picture, isLiked, isSaved, isHeartClicked, handleLikeClick
       <button className='share-btn'>
         <ShareIcon />
       </button>
-      <button className='save-btn'>
+      <button className='save-btn' 
+        isSaved={isSaved}
+        onClick={() => handleSaveClick(picture.id)}>
         <SaveIcon isSaved={isSaved}/>
       </button>
     </div>
