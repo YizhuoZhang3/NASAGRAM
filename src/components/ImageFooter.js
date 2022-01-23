@@ -4,10 +4,15 @@ import CommentIcon from './CommentIcon';
 import ShareIcon from './ShareIcon';
 import SaveIcon from './SaveIcon';
 
-function ImageFooter({isLiked, isSaved}){
+function ImageFooter({picture, isLiked, isSaved, isHeartClicked, handleLikeClick, handleSaveClick}){
+  console.log(picture)
   return(
     <div className='image-footer'>
-      <button className='heart-btn'>
+      <button className='heart-btn'
+        isClicked={isHeartClicked}
+        isLiked={isLiked}
+        onClick={() => handleLikeClick(picture.id)}
+        onClick={() => handleSaveClick(picture.id)}>
         <HeartIcon isLiked={isLiked}/>
       </button>
       <button className='comment-btn'>

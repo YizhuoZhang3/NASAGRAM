@@ -34,7 +34,7 @@ export default function NasaPhoto() {
 
   const Url = `${baseUrl}&start_date=${dates.start}&end_date=${dates.end}`;
 
-   const randomLikes = () => Math.floor(Math.random() * 150);
+  const randomLikes = () => Math.floor(Math.random() * 150);
 
   const processData = (data) => 
     data
@@ -90,6 +90,42 @@ export default function NasaPhoto() {
     fetchData(Url, setPhotoData);
   }, [Url, setPhotoData]);
 
+  // like an image
+  const like = (id) => {
+    setPhotoData((prev) =>
+      prev.map((image) =>
+        image.id === id ? {...image, likes: image.likes + 1} : image,
+      ),
+    );
+  };
+
+  // unlike an image
+  const unlike = (id) => {
+    setPhotoData((prev) =>
+      prev.map((image) =>
+        image.id === id ? {...image, likes: image.likes - 1} : image,
+      ),
+    );
+  };
+
+  // mark save
+  const save = (id) => {
+    setPhotoData((prev) =>
+      prev.map((image) =>
+        image.id === id ? {...image, isSaved: true} : image,
+      ),
+    );
+  };
+
+  //remove save mark
+  const remove = (id) => {
+    setPhotoData((prev) =>
+      prev.map((image) =>
+        image.id === id ? {...image, isSaved: false} : image,
+      ),
+    );
+  };
+
   return (
     <>
     <NavBar />
@@ -97,7 +133,11 @@ export default function NasaPhoto() {
       {photoData.map((image) => (
         <Card 
           key={image.id} 
-          picture={image}
+          image={image}
+          like={like}
+          unlike={unlike}
+          save={save}
+          remove={remove}
          />
       ))}
     </div>
