@@ -11,7 +11,7 @@ const Card = (props) => {
   };
 
   const [isLiked, setIsLiked] = useState(false);
-  // const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   // const [comments, setComments] = useState([]);
 

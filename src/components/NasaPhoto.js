@@ -34,7 +34,7 @@ export default function NasaPhoto() {
 
   const Url = `${baseUrl}&start_date=${dates.start}&end_date=${dates.end}`;
 
-  const randomLikes = () => Math.floor(Math.random() * 150);
+   const randomLikes = () => Math.floor(Math.random() * 150);
 
   const processData = (data) => 
     data
@@ -53,9 +53,9 @@ export default function NasaPhoto() {
       try{
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         const processedData = processData(data);
-        console.log("this is processed data", processedData);
+        //console.log("this is processed data", processedData);
         setPhotoData((prev) => prev.concat(processedData));
       } catch (err){
         setErrorMessage(err.message);
