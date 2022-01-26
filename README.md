@@ -2,6 +2,12 @@
 
 This project is inspired by Shopify, Front End Developer Intern Challenge - Summer 2022
 
+## Tech Stack
+- React 
+- JavaScript
+- CSS
+- HTML
+
 ## Available Scripts
 
 In the project directory, you can run:
