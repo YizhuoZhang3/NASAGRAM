@@ -25,6 +25,21 @@ button{
   border: none;
 }
 
+/* ------  home page ------- */
+.home-page{
+  width: 100%;
+  height: 500px;
+  background: #CCCCCC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homelink{ 
+  width: 100px;
+  height: 100px;
+}
+
 /* navbar ---------- */
 
 .navbar {
